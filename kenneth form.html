@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coke Float Order Form</title>
+<style>
+    body {
+        font-family: Poppins, sans-serif;
+        background: #f0f6ff;
+        padding: 20px;
+    }
+    h1 { text-align: center; color: #1b3c8d; }
+    .card {
+        background: #fff;
+        padding: 20px;
+        margin: 15px auto;
+        max-width: 500px;
+        border-radius: 18px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    label { font-weight: 600; }
+    select, input { width: 100%; padding: 10px; margin: 8px 0 16px; border-radius: 10px; border: 1px solid #ccc; }
+    button {
+        width: 100%;
+        padding: 14px;
+        background: #1a2a6d;
+        color: white;
+        border: none;
+        border-radius: 15px;
+        font-size: 18px;
+        cursor: pointer;
+        margin-top: 8px;
+    }
+    button:hover { background: #152257; }
+    #receipt {
+        margin-top: 20px;
+        padding: 20px;
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    #receipt h2 { text-align: center; color: #1b3c8d; }
+    #receipt ul { padding-left: 20px; }
+    .remove-btn {
+        background: #e11d48;
+        margin-left: 10px;
+        padding: 2px 6px;
+        font-size: 12px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+<h1>🍨 Float Order Form</h1>
+
+<div class="card">
+    <label>Choose Your Drink</label>
+    <select id="drink">
+        <option value="Coke Float" data-price="35">Coke Float – ₱35</option>
+        <option value="Sprite Float" data-price="35">Sprite Float – ₱35</option>
+        <option value="Royal Float" data-price="35">Royal Float – ₱35</option>
+        <option value="Iced Coffee Float" data-price="45">Iced Coffee Float – ₱45</option>
+    </select>
+
+    <label>Size</label>
+    <select id="size">
+        <option value="Regular" data-price="0">Regular</option>
+        <option value="Large" data-price="10">Large (+₱10)</option>
+        <option value="X-Large" data-price="20">X-Large (+₱20)</option>
+    </select>
+
+    <label>Quantity</label>
+    <input type="number" id="qty" min="1" value="1">
+
+    <label>Toppings</label>
+    <select id="topping">
+        <option value="None" data-price="0">None</option>
+        <option value="Chocolate Syrup" data-price="10">Chocolate Syrup (+₱10)</option>
+        <option value="Caramel Drizzle" data-price="10">Caramel Drizzle (+₱10)</option>
+        <option value="Extra Ice Cream" data-price="15">Extra Ice Cream (+₱15)</option>
+    </select>
+
+    <button onclick="addToReceipt()">Add to Receipt</button>
+</div>
+
+<div class="card" id="receipt">
+    <h2>🧾 Live Order Receipt</h2>
+    <div id="receiptContent">No items yet.</div>
+</div>
+
+<script>
+let receiptItems = [];
+const taxRate = 0.05;
+
+function addToReceipt() {
+    const drinkSelect = document.getElementById("drink");
+    const sizeSelect = document.getElementById("size");
+    const toppingSelect = document.getElementById("topping");
+    const qty = parseInt(document.getElementById("qty").value);
+
+    const drink = drinkSelect.value;
+    const basePrice = parseInt(drinkSelect.selectedOptions[0].dataset.price);
+    const size = sizeSelect.value;
+    const sizePrice = parseInt(sizeSelect.selectedOptions[0].dataset.price);
+    const topping = toppingSelect.value;
+    const toppingPrice = parseInt(toppingSelect.selectedOptions[0].dataset.price);
+
+    const itemTotal = (basePrice + sizePrice + toppingPrice) * qty;
+
+    receiptItems.push({ drink, size, topping, qty, itemTotal });
+    updateReceipt();
+}
+
+function removeItem(index) {
+    receiptItems.splice(index, 1);
+    updateReceipt();
+}
+
+function updateReceipt() {
+    const receiptDiv = document.getElementById("receiptContent");
+    if(receiptItems.length === 0){
+        receiptDiv.innerHTML = "No items yet.";
+        return;
+    }
+
+    let html = "<ul>";
+    let subtotal = 0;
+    receiptItems.forEach((item, idx) => {
+        html += `<li>${item.qty} x ${item.drink} (${item.size}, Topping: ${item.topping}) = ₱${item.itemTotal.toFixed(2)}
+                 <span class="remove-btn" onclick="removeItem(${idx})">Remove</span></li>`;
+        subtotal += item.itemTotal;
+    });
+    html += "</ul>";
+
+    const tax = subtotal * taxRate;
+    const total = subtotal + tax;
+
+    html += `<p><strong>Subtotal:</strong> ₱${subtotal.toFixed(2)}</p>`;
+    html += `<p><strong>Tax (5%):</strong> ₱${tax.toFixed(2)}</p>`;
+    html += `<p><strong>Total:</strong> ₱${total.toFixed(2)}</p>`;
+
+    receiptDiv.innerHTML = html;
+}
+</script>
+
+</body>
+</html>
