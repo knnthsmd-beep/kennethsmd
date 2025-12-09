@@ -328,13 +328,38 @@
  <!-- GALLERY -->
 <section id="gallery" class="section">
   <h2>Photo Gallery</h2>
+
+  <style>
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 10px 0;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+  </style>
+
   <div class="gallery">
-    <img src="ken.jpg" alt="Photo 1">
-    <img src="family.jpg" alt="Photo 2">
-    <img src="bike.jpg" alt="Photo 3">
-    <img src="lomi.jpg" alt="Photo 4">
+    <img src="more1.jpg" alt="Photo 1">
+    <img src="more2.jpg" alt="Photo 2">
+    <img src="more3.jpg" alt="Photo 3">
+    <img src="more4.jpg" alt="Photo 4">
   </div>
-</section
+</section>
+
 
 </main>
 
@@ -381,6 +406,7 @@
 
 </body>
 </html> 
+
 
 
 
