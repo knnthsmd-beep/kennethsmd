@@ -56,45 +56,9 @@
   .section-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
 
   .family{display:flex;gap:14px;flex-wrap:wrap}
-  .member {
-  .family {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 14px;
-  margin-top: 12px;
-}
-
-.member {
-  border-radius: 12px;
-  overflow: hidden;
-  background: linear-gradient(180deg,#fff,#fcfcff);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: transform 0.3s ease;
-}
-
-.member:hover {
-  transform: translateY(-4px);
-}
-
-.member img {
-  width: 100%;
-  aspect-ratio: 1/1; /* makes it always square */
-  object-fit: cover;
-  display: block;
-  border-radius: 12px 12px 0 0;
-}
-
-.member p {
-  margin: 8px 0;
-  padding: 0;
-  text-align: center;
-  color: var(--muted);
-  font-size: 14px;
-}
-
-
+  .member{flex:1 1 150px;min-width:120px;border-radius:12px;overflow:hidden;background:linear-gradient(180deg,#fff,#fcfcff)}
+  .member img{width:100%;height:140px;object-fit:cover;display:block}
+  .member p{margin:8px;padding:0;text-align:center;color:var(--muted)}
 
   .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
   .gallery-grid img{width:100%;height:110px;object-fit:cover;border-radius:10px;cursor:pointer;transition:transform .25s ease}
@@ -432,12 +396,8 @@
     setTimeout(()=>{c.classList.add('show')}, i*120)
   });
 </script>
-
 </body>
-</html> 
-
-
-
+</html>  
 
 
 
